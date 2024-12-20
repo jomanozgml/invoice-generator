@@ -99,15 +99,17 @@ def generate_invoice_pdf(df):
 
         # Tracking Code and Invoice No. on the same line
         pdf.ln(3)
+        # Update tracking code and dashed line section
         tracking_text = f"Tracking Code: {group['trackingCode'].iloc[0]}" if pd.notnull(group['trackingCode'].iloc[0]) else "Tracking Code: N/A"
         invoice_text = f"Invoice No.: {group['invoiceNumber'].iloc[0]}"
         pdf.cell(0, 7, tracking_text, ln=0)
         pdf.cell(0, 7, invoice_text, ln=1, align='R')
         # Dotted underline under details
         pdf.set_x(pdf.l_margin + pdf.get_string_width("Tracking Code: "))
-        pdf.dashed_line(pdf.get_x(), pdf.get_y(), pdf.get_x() + pdf.get_string_width(str(group['trackingCode'].iloc[0])), pdf.get_y())
+        tracking_value = str(group['trackingCode'].iloc[0]) if pd.notnull(group['trackingCode'].iloc[0]) else "N/A"
+        pdf.dashed_line(pdf.get_x(), pdf.get_y(), pdf.get_x() + pdf.get_string_width(tracking_value), pdf.get_y())
         pdf.set_x(pdf.w - pdf.r_margin - pdf.get_string_width(invoice_text) + pdf.get_string_width("Invoice No.: "))
-        pdf.dashed_line(pdf.get_x(), pdf.get_y(), pdf.get_x() + pdf.get_string_width(group['invoiceNumber'].iloc[0]), pdf.get_y())
+        pdf.dashed_line(pdf.get_x(), pdf.get_y(), pdf.get_x() + pdf.get_string_width(str(group['invoiceNumber'].iloc[0])), pdf.get_y())
 
         # Customer's Name with dotted underline
         pdf.ln(5)
@@ -150,14 +152,16 @@ def generate_invoice_pdf(df):
         # Items Table Content
         pdf.set_font("Arial", "", 12)
         total_amount = 0
+        # Update amount formatting in table content
         for i, item in enumerate(group.itertuples(), start=1):
             particulars = item.sellerSku
             amount = float(item.paidPrice)
             total_amount += amount
+            amount_str = f"NRs. {amount:.2f}"
             pdf.cell(col_widths['SN'], 10, str(i), 1, 0, "C")
             pdf.cell(col_widths['Particulars'], 10, particulars, 1, 0, "L")
             pdf.cell(col_widths['Inv Code'], 10, "", 1, 0, "C")
-            pdf.cell(col_widths['Amount'], 10, f"NRs. {amount:.2f}", 1, 1, "R")
+            pdf.cell(col_widths['Amount'], 10, amount_str, 1, 1, "R")
 
         # Add empty row before last row
         pdf.cell(col_widths['SN'], 10, "", 1, 0, "C")

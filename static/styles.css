@@ -1,0 +1,142 @@
+/* styles.css */
+
+/* Gradient background */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+}
+
+/* Container styling */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Input fields */
+input[type="text"],
+input[type="email"],
+input[type="file"] {
+    width: 100%;
+    padding: 12px 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* File input customization */
+input[type="file"] {
+    padding: 5px 10px;
+}
+
+/* Drag-and-drop area */
+#drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#drop-area.dragging {
+    border-color: #5c6bc0;
+    background-color: #f0f0f0;
+}
+
+#drop-area p {
+    margin: 0;
+    color: #555;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    background-color: #5c6bc0;
+    color: white;
+    padding: 14px 20px;
+    margin-top: 30px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #3949ab;
+}
+
+/* Messages */
+.messages {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.messages li {
+    list-style: none;
+}
+
+.error {
+    background-color: #e57373;
+    color: white;
+}
+
+.success {
+    background-color: #81c784;
+    color: white;
+}
+
+/* Form row and group styling */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 45%;
+    margin-right: 10px;
+}
+
+.form-group:last-child {
+    margin-right: 0;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .container {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-group {
+        min-width: 100%;
+        margin-right: 0;
+    }
+}

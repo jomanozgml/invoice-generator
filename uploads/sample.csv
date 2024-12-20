@@ -1,0 +1,4 @@
+order_id,customer_name,email,item_name,quantity,price
+1001,John Doe,john@example.com,T-Shirt,2,29.99
+1002,Jane Smith,jane@example.com,Jeans,1,59.99
+1003,Bob Wilson,bob@example.com,Hoodie,3,45.00

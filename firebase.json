@@ -1,0 +1,14 @@
+{
+  "hosting": {
+    "public": "public",
+    "rewrites": [
+      {
+        "source": "**",
+        "run": {
+          "serviceId": "invoice-generator",
+          "region": "us-central1"
+        }
+      }
+    ]
+  }
+}

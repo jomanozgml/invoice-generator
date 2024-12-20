@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1>Invoice Generator</h1>
+
+    <div id="messages" class="messages"></div>
+
+    <form id="invoice-form" action="/" method="post" enctype="multipart/form-data">
+        <!-- File Input -->
+        <label for="csv_file">Select CSV file:</label>
+        <input type="file" name="csv_file" id="csv_file" accept=".csv" required style="display: none;">
+
+        <div id="drop-area">
+            <p>Drag & Drop your CSV file here or click to select</p>
+        </div>
+        </br>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="company_name">Company Name:</label>
+                <input type="text" name="company_name" id="company_name" value="{{ company.company_name }}" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" name="address" id="address" value="{{ company.address }}" required>
+            </div>
+            <div class="form-group">
+                <label for="phone_number">Phone Number:</label>
+                <input type="text" name="phone_number" id="phone_number" value="{{ company.phone_number }}" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" value="{{ company.email }}" required>
+            </div>
+            <div class="form-group">
+                <label for="pan_no">PAN No.:</label>
+                <input type="text" name="pan_no" id="pan_no" value="{{ company.pan_no }}" required>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Generate Invoices</button>
+    </form>
+</div>
+
+<script>
+$(document).ready(function() {
+    var dropArea = $('#drop-area');
+    var fileInput = $('#csv_file');
+
+    dropArea.on('dragenter dragover', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        dropArea.addClass('dragging');
+    });
+
+    dropArea.on('dragleave', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        dropArea.removeClass('dragging');
+    });
+
+    dropArea.on('drop', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        dropArea.removeClass('dragging');
+        var files = event.originalEvent.dataTransfer.files;
+        fileInput[0].files = files;
+        fileInput.trigger('change');
+    });
+
+    dropArea.on('click', function() {
+        fileInput.click();
+    });
+
+    fileInput.on('change', function() {
+        var fileName = fileInput.val().split('\\').pop();
+        dropArea.find('p').text(fileName);
+    });
+
+    $('#invoice-form').on('submit', function(event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: '/',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                $('#messages').html('<div class="success">' + response.message + '</div>');
+                $('#invoice-form')[0].reset();
+                dropArea.find('p').text('Drag & Drop your CSV file here or click to select');
+                // Trigger file download
+                window.location.href = '/download?file=' + encodeURIComponent(response.pdf_path);
+            },
+            error: function(xhr) {
+                var errorMessage = xhr.responseJSON ? xhr.responseJSON.message : 'An error occurred';
+                $('#messages').html('<div class="error">' + errorMessage + '</div>');
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>

@@ -1,3 +1,5 @@
+# CI/CD pipeline to build and deploy to GCP Cloud Run and Firebase Hosting
+
 name: CI/CD Pipeline
 
 on:

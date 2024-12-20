@@ -16,11 +16,11 @@
 
     <form id="invoice-form" action="/" method="post" enctype="multipart/form-data">
         <!-- File Input -->
-        <label for="csv_file">Select CSV file:</label>
-        <input type="file" name="csv_file" id="csv_file" accept=".csv" required style="display: none;">
+        <label for="csv_file">Select CSV or XLSX file:</label>
+        <input type="file" name="csv_file" id="csv_file" accept=".csv, .xls, .xlsx" required style="display: none;">
 
         <div id="drop-area">
-            <p>Drag & Drop your CSV file here or click to select</p>
+            <p>Drag & Drop your file here or click to select</p>
         </div>
         </br>
         <div class="form-row">

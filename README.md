@@ -1,8 +1,8 @@
 # invoice-generator
-A web application to generate PDF invoices from CSV file contents using Python Flask, Docker, Google Cloud Platform and Firebase.
+A web application to generate PDF invoices from CSV or XLSX file contents using Python Flask, Docker, Google Cloud Platform and Firebase.
 
 ## Features
-- Upload CSV files containing invoice data.
+- Upload CSV or XLSX files containing invoice data.
 - Generate PDF invoices from the uploaded data.
 - Deploy easily with Docker on Google Cloud Platform.
 - Host the web application on Firebase.

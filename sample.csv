@@ -1,4 +1,6 @@
-order_id,customer_name,email,item_name,quantity,price
-1001,John Doe,john@example.com,T-Shirt,2,29.99
-1002,Jane Smith,jane@example.com,Jeans,1,59.99
-1003,Bob Wilson,bob@example.com,Hoodie,3,45.00
+Created at;Order Number;Shipping Name;Shipping Address;Shipping Phone Number;Item Name;Variation;Unit Price;Tracking Code;Invoice Number;Customer Email
+2023-10-01;ORD1001;John Doe;123 Elm Street, Springfield;555-1234;T-Shirt;Blue, Size M;29.99;TRK123456;INV1001;john.doe@example.com
+2023-10-02;ORD1002;Jane Smith;456 Oak Avenue, Metropolis;555-5678;Jeans;Black, Size 32;59.99;TRK789012;INV1002;jane.smith@example.com
+2023-10-03;ORD1003;Bob Wilson;789 Pine Road, Gotham;555-9012;Hoodie;Gray, Size L;45.00;TRK345678;INV1003;bob.wilson@example.com
+2023-10-04;ORD1004;Alice Johnson;321 Maple Lane, Star City;555-3456;Sneakers;White, Size 9;75.50;TRK901234;INV1004;alice.johnson@example.com
+2023-10-05;ORD1005;Charlie Brown;654 Cedar Blvd, Central City;555-7890;Cap;Red, Adjustable;19.99;TRK567890;INV1005;charlie.brown@example.com

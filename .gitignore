@@ -67,3 +67,4 @@ node_modules/
 
 # service account key file
 service-account.json
+gcp-compute-account.json

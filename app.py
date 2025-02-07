@@ -183,11 +183,6 @@ def generate_invoice_pdf(df):
         pdf.cell(total_col_widths['Inv Code'], 14, "Total", 1, 0, "C")
         pdf.cell(total_col_widths['Amount'], 14, f"NRs. {total_amount:.2f}", 1, 1, "R")
 
-        # Footer
-        pdf.set_y(-30)
-        pdf.set_font("Arial", "I", 12)
-        pdf.cell(0, 10, "Thank you for your business!", 0, 0, "C")
-
     output_filename = f"invoices_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
     output_path = os.path.join(app.config['OUTPUT_FOLDER'], output_filename)
     pdf.output(output_path)

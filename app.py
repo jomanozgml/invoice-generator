@@ -98,18 +98,22 @@ def generate_invoice_pdf(df):
         pdf.dashed_line(pdf.get_x(), pdf.get_y(), pdf.get_x() + pdf.get_string_width(str(group['createTime'].iloc[0])), pdf.get_y())
 
         # Tracking Code and Invoice No. on the same line
+                # Tracking Code and Invoice No. on the same line
         pdf.ln(3)
-        # Update tracking code and dashed line section
-        tracking_text = f"Tracking Code: {group['trackingCode'].iloc[0]}" if pd.notnull(group['trackingCode'].iloc[0]) else "Tracking Code: N/A"
-        invoice_text = f"Invoice No.: {group['invoiceNumber'].iloc[0]}" if pd.notnull(group['invoiceNumber'].iloc[0]) else "Invoice No.: ______"
+        # Safely handle missing tracking code and invoice number
+        tracking_val = group['trackingCode'].iloc[0]
+        invoice_val = group['invoiceNumber'].iloc[0]
+        tracking_text = f"Tracking Code: {tracking_val}" if pd.notnull(tracking_val) else "Tracking Code: N/A"
+        invoice_text = f"Invoice No.: {invoice_val}" if pd.notnull(invoice_val) else "Invoice No.: ______"
         pdf.cell(0, 7, tracking_text, ln=0)
         pdf.cell(0, 7, invoice_text, ln=1, align='R')
         # Dotted underline under details
         pdf.set_x(pdf.l_margin + pdf.get_string_width("Tracking Code: "))
-        tracking_value = str(group['trackingCode'].iloc[0]) if pd.notnull(group['trackingCode'].iloc[0]) else "N/A"
-        pdf.dashed_line(pdf.get_x(), pdf.get_y(), pdf.get_x() + pdf.get_string_width(tracking_value), pdf.get_y())
+        tracking_value_str = str(tracking_val) if pd.notnull(tracking_val) else "N/A"
+        pdf.dashed_line(pdf.get_x(), pdf.get_y(), pdf.get_x() + pdf.get_string_width(tracking_value_str), pdf.get_y())
         pdf.set_x(pdf.w - pdf.r_margin - pdf.get_string_width(invoice_text) + pdf.get_string_width("Invoice No.: "))
-        pdf.dashed_line(pdf.get_x(), pdf.get_y(), pdf.get_x() + pdf.get_string_width(str(group['invoiceNumber'].iloc[0])), pdf.get_y())
+        invoice_value_str = str(invoice_val) if pd.notnull(invoice_val) else "______"
+        pdf.dashed_line(pdf.get_x(), pdf.get_y(), pdf.get_x() + pdf.get_string_width(invoice_value_str), pdf.get_y())
 
         # Customer's Name with dotted underline
         pdf.ln(5)

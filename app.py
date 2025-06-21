@@ -98,29 +98,39 @@ def generate_invoice_pdf(df):
         pdf.dashed_line(pdf.get_x(), pdf.get_y(), pdf.get_x() + pdf.get_string_width(str(group['createTime'].iloc[0])), pdf.get_y())
 
         # Tracking Code and Invoice No. on the same line
-                # Tracking Code and Invoice No. on the same line
         pdf.ln(3)
         # Safely handle missing tracking code and invoice number
         tracking_val = group['trackingCode'].iloc[0]
         invoice_val = group['invoiceNumber'].iloc[0]
-        tracking_text = f"Tracking Code: {tracking_val}" if pd.notnull(tracking_val) else "Tracking Code: N/A"
-        invoice_text = f"Invoice No.: {invoice_val}" if pd.notnull(invoice_val) else "Invoice No.: ______"
+
+        # Prepare final values
+        tracking_value_str = str(tracking_val) if pd.notnull(tracking_val) else "N/A"
+        invoice_value_str = str(invoice_val) if pd.notnull(invoice_val) else f"MS-{order_number}"
+
+        # Prepare display text
+        tracking_text = f"Tracking Code: {tracking_value_str}"
+        invoice_text = f"Invoice No.: {invoice_value_str}"
+
+        # Print to PDF
         pdf.cell(0, 7, tracking_text, ln=0)
         pdf.cell(0, 7, invoice_text, ln=1, align='R')
-        # Dotted underline under details
+
+        # Dotted underline
         pdf.set_x(pdf.l_margin + pdf.get_string_width("Tracking Code: "))
-        tracking_value_str = str(tracking_val) if pd.notnull(tracking_val) else "N/A"
         pdf.dashed_line(pdf.get_x(), pdf.get_y(), pdf.get_x() + pdf.get_string_width(tracking_value_str), pdf.get_y())
-        pdf.set_x(pdf.w - pdf.r_margin - pdf.get_string_width(invoice_text) + pdf.get_string_width("Invoice No.: "))
-        invoice_value_str = str(invoice_val) if pd.notnull(invoice_val) else "______"
+
+        pdf.set_x(pdf.w - pdf.r_margin - pdf.get_string_width(invoice_value_str))
         pdf.dashed_line(pdf.get_x(), pdf.get_y(), pdf.get_x() + pdf.get_string_width(invoice_value_str), pdf.get_y())
+
 
         # Customer's Name with dotted underline
         pdf.ln(5)
-        customer_text = f"Customer's Name: {group['customerName'].iloc[0]}"
+        customer_val = group['customerName'].iloc[0]
+        customer_str = str(customer_val) if pd.notnull(customer_val) else ""
+        customer_text = f"Customer's Name: {customer_str}"
         pdf.cell(0, 7, customer_text, ln=1)
         pdf.set_x(pdf.l_margin + pdf.get_string_width("Customer's Name: "))
-        pdf.dashed_line(pdf.get_x(), pdf.get_y(), pdf.get_x() + pdf.get_string_width(group['customerName'].iloc[0]), pdf.get_y())
+        pdf.dashed_line(pdf.get_x(), pdf.get_y(), pdf.get_x() + pdf.get_string_width(customer_str), pdf.get_y())
 
         # Address on left, Contact No. on right, same line
         pdf.ln(3)

@@ -101,7 +101,7 @@ def generate_invoice_pdf(df):
         pdf.ln(3)
         # Update tracking code and dashed line section
         tracking_text = f"Tracking Code: {group['trackingCode'].iloc[0]}" if pd.notnull(group['trackingCode'].iloc[0]) else "Tracking Code: N/A"
-        invoice_text = f"Invoice No.: {group['invoiceNumber'].iloc[0]}"
+        invoice_text = f"Invoice No.: {group['invoiceNumber'].iloc[0]}" if pd.notnull(group['invoiceNumber'].iloc[0]) else "Invoice No.: ______"
         pdf.cell(0, 7, tracking_text, ln=0)
         pdf.cell(0, 7, invoice_text, ln=1, align='R')
         # Dotted underline under details
